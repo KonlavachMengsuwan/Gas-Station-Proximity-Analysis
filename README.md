@@ -23,7 +23,7 @@ def create_random_point_on_road(roads_gdf):
     random_road = roads_gdf.sample(1).iloc[0]['geometry']
     random_point_on_road = random_road.interpolate(random.random(), normalized=True)
     return Point(random_point_on_road)
-```
+```python
 
 ### Network Analysis
 The road network is constructed using NetworkX, and the shortest path between the random point and each gas station is calculated using Dijkstra's algorithm. The nearest gas station is then identified.
