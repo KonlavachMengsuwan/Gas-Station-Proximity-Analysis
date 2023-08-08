@@ -123,13 +123,5 @@ The analysis identifies the nearest gas station and visualizes the route, provid
 ### Conclusion
 This project demonstrates how to conduct spatial and network analysis using Python's geospatial libraries. It offers a practical example of solving real-world spatial problems and can be extended to other applications in urban planning, transportation, and logistics.
 
-### License
-This project is open-source and available under the MIT License. Feel free to fork, modify, and share!
-```python
-
-You can copy and paste this markdown chunk into the desired location in your `README.md` file. Make sure to replace `path_to_your_plot_image.png` with the actual path to the image of your plot if you decide to include it in the README.
-```
-
-
 
 
