@@ -118,7 +118,7 @@ plt.show()
 ### Results
 The analysis identifies the nearest gas station and visualizes the route, providing insights into the spatial relationships between the random point and nearby gas stations.
 
- <!-- Replace with the actual path to your plot image -->
+![](Gas-Station.png)<!-- -->
 
 ### Conclusion
 This project demonstrates how to conduct spatial and network analysis using Python's geospatial libraries. It offers a practical example of solving real-world spatial problems and can be extended to other applications in urban planning, transportation, and logistics.
