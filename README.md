@@ -23,6 +23,7 @@ def create_random_point_on_road(roads_gdf):
     random_road = roads_gdf.sample(1).iloc[0]['geometry']
     random_point_on_road = random_road.interpolate(random.random(), normalized=True)
     return Point(random_point_on_road)
+```
 
 ### Network Analysis
 The road network is constructed using NetworkX, and the shortest path between the random point and each gas station is calculated using Dijkstra's algorithm. The nearest gas station is then identified.
@@ -36,15 +37,18 @@ for _, row in osm_roads_gdf.iterrows():
             add_edges_from_linestring(G, line, weight=line.length)
     else:
         add_edges_from_linestring(G, row.geometry, weight=row.geometry.length)
+```
 
 #### Calculating Shortest Paths
 ```python
 def shortest_path_to_gas_station(graph, source_node, target_node):
     return nx.shortest_path_length(graph, source=source_node, target=target_node, weight='weight')
+```
 
 #### Identifying the Nearest Gas Station
 ```python
 nearest_gas_station = gas_stations_gdf.loc[gas_stations_gdf['distance_to_random_point'].idxmin()]
+```
 
 ### Visualization
 The final visualization includes the study area boundary, OSM roads, gas stations, random point, and the route to the nearest gas station.
@@ -53,6 +57,7 @@ fig, ax = plt.subplots(figsize=(10, 10))
 osm_roads_gdf.plot(ax=ax, color='#B0B0B0', linewidth=0.5)
 ...
 plt.show()
+```
 
 ### Results
 The analysis identifies the nearest gas station and visualizes the route, providing insights into the spatial relationships between the random point and nearby gas stations.
@@ -67,7 +72,7 @@ This project is open-source and available under the MIT License. Feel free to fo
 ```python
 
 You can copy and paste this markdown chunk into the desired location in your `README.md` file. Make sure to replace `path_to_your_plot_image.png` with the actual path to the image of your plot if you decide to include it in the README.
-
+```
 
 
 
