@@ -1,0 +1,17 @@
+{
+"type": "FeatureCollection",
+"name": "Gas_Stations",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "name": "Esso", "description": null }, "geometry": { "type": "Point", "coordinates": [ 13.3905164, 52.492751 ] } },
+{ "type": "Feature", "properties": { "name": "Esso", "description": null }, "geometry": { "type": "Point", "coordinates": [ 13.3410786, 52.5197896 ] } },
+{ "type": "Feature", "properties": { "name": "Shell", "description": null }, "geometry": { "type": "Point", "coordinates": [ 13.3012015, 52.5159335 ] } },
+{ "type": "Feature", "properties": { "name": "Snack & Shop", "description": null }, "geometry": { "type": "Point", "coordinates": [ 13.3454392, 52.4901927 ] } },
+{ "type": "Feature", "properties": { "name": "Shell", "description": null }, "geometry": { "type": "Point", "coordinates": [ 13.3068608, 52.4887684 ] } },
+{ "type": "Feature", "properties": { "name": "Shell", "description": null }, "geometry": { "type": "Point", "coordinates": [ 13.3466069, 52.4962173 ] } },
+{ "type": "Feature", "properties": { "name": "Jet", "description": null }, "geometry": { "type": "Point", "coordinates": [ 13.3744, 52.4892 ] } },
+{ "type": "Feature", "properties": { "name": "TotalEnergies Tankstelle", "description": null }, "geometry": { "type": "Point", "coordinates": [ 13.3768151, 52.5005006 ] } },
+{ "type": "Feature", "properties": { "name": "Shell", "description": null }, "geometry": { "type": "Point", "coordinates": [ 13.3550713, 52.478649 ] } },
+{ "type": "Feature", "properties": { "name": "Shell", "description": null }, "geometry": { "type": "Point", "coordinates": [ 13.3313657, 52.4929235 ] } }
+]
+}
