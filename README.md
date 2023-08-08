@@ -21,10 +21,26 @@ The analysis uses the following GeoJSON files:
 
 ### Random Point Generation
 
-A random point is generated on a randomly selected road segment using the `create_random_point_on_road` function:
+A random point is generated on a randomly selected road segment using the `create_random_point_on_road` function.
 
-```python
-def create_random_point_on_road(roads_gdf):
-    random_road = roads_gdf.sample(1).iloc[0]['geometry']
-    random_point_on_road = random_road.interpolate(random.random(), normalized=True)
-    return Point(random_point_on_road)
+### Network Analysis
+
+The road network is constructed using NetworkX, and the shortest path between the random point and each gas station is calculated using Dijkstra's algorithm. The nearest gas station is then identified.
+
+### Visualization
+
+The final visualization includes the study area boundary, OSM roads, gas stations, random point, and the route to the nearest gas station.
+
+## Results
+
+The analysis identifies the nearest gas station and visualizes the route, providing insights into the spatial relationships between the random point and nearby gas stations.
+
+![Final Plot](path_to_your_plot_image.png)  <!-- Replace with the actual path to your plot image -->
+
+## Conclusion
+
+This project demonstrates how to conduct spatial and network analysis using Python's geospatial libraries. It offers a practical example of solving real-world spatial problems and can be extended to other applications in urban planning, transportation, and logistics.
+
+## License
+
+This project is open-source and available under the MIT License. Feel free to fork, modify, and share!
