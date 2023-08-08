@@ -123,5 +123,37 @@ The analysis identifies the nearest gas station and visualizes the route, provid
 ### Conclusion
 This project demonstrates how to conduct spatial and network analysis using Python's geospatial libraries. It offers a practical example of solving real-world spatial problems and can be extended to other applications in urban planning, transportation, and logistics.
 
+## Animation of Shortest Route
+
+The following code snippet creates an animation to visualize the shortest route from the random point to the nearest gas station. The animation progresses step by step, highlighting the path as it moves from the starting point to the destination.
+
+```python
+from matplotlib.animation import FuncAnimation
+
+# Function to create the animation frame by frame
+def animate(i):
+    ax.clear()
+    osm_roads_gdf.plot(ax=ax, color='#B0B0B0', linewidth=0.5)
+    study_area_gdf.boundary.plot(ax=ax, color='#ADD8E6', linewidth=2)
+    gas_stations_gdf.plot(ax=ax, color='#FFA07A', markersize=50, zorder=2)
+    random_point_gdf.plot(ax=ax, color='#D82C08', markersize=100, zorder=3)
+    ax.set_aspect('equal')
+    if i > 1: # Ensure there are at least two points to create a LineString
+        # Plotting the partial route as the animation progresses
+        partial_route = LineString(route_to_nearest_gas_station[:i])
+        gpd.GeoSeries(partial_route).plot(ax=ax, color='#32CD32', linewidth=2, zorder=4)
+
+# Setting up the figure
+fig, ax = plt.subplots(figsize=(10, 10))
+anim = FuncAnimation(fig, animate, frames=len(route_to_nearest_gas_station), interval=200, repeat=False)
+
+# Saving the animation
+anim.save('shortest_route_animation.gif', writer='pillow')
+```python
+
+This code snippet will create an animation of the shortest route from the random point to the gas station and save it as a GIF file. Each frame of the animation adds one more segment of the path, starting from the random point and progressing toward the gas station.
+
+![Animation of the shortest route to the nearest gas station](shortest_route_animation.gif)
+
 
 
