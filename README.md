@@ -19,6 +19,11 @@ The analysis uses the following GeoJSON files:
 ### Random Point Generation
 A random point is generated on a randomly selected road segment using the following code:
 ```python
+import geopandas as gpd
+from shapely.geometry import Point
+import random
+import matplotlib.pyplot as plt
+
 def create_random_point_on_road(roads_gdf):
     random_road = roads_gdf.sample(1).iloc[0]['geometry']
     random_point_on_road = random_road.interpolate(random.random(), normalized=True)
@@ -30,6 +35,19 @@ The road network is constructed using NetworkX, and the shortest path between th
 
 #### Building the Network Graph
 ```python
+import networkx as nx
+from shapely.geometry import LineString
+
+# Function to convert multi-line geometries into individual line segments
+def add_edges_from_linestring(graph, linestring, weight):
+    for i in range(len(linestring.coords) - 1):
+        graph.add_edge(linestring.coords[i], linestring.coords[i + 1], weight=weight)
+
+# Function to find the nearest node in the graph for a given point
+def nearest_node(graph, point):
+    return min(graph.nodes, key=lambda node: point.distance(Point(node)))
+
+# Creating a new graph
 G = nx.Graph()
 for _, row in osm_roads_gdf.iterrows():
     if row.geometry.geom_type == 'MultiLineString':
@@ -41,21 +59,59 @@ for _, row in osm_roads_gdf.iterrows():
 
 #### Calculating Shortest Paths
 ```python
+# Function to calculate the shortest path using Dijkstra's algorithm
 def shortest_path_to_gas_station(graph, source_node, target_node):
     return nx.shortest_path_length(graph, source=source_node, target=target_node, weight='weight')
-```
 
-#### Identifying the Nearest Gas Station
-```python
+# Finding the nearest node for the random point
+random_point_node = nearest_node(G, random_point)
+
+# Finding the nearest nodes for each gas station
+gas_stations_gdf['nearest_node'] = gas_stations_gdf['geometry'].apply(lambda x: nearest_node(G, x))
+
+# Adding the random point as a node in the graph
+G.add_node(random_point_node)
+
+# Adding an edge from the random point to the nearest node on the road
+nearest_road_node = nearest_node(G, Point(random_point_node))
+G.add_edge(random_point_node, nearest_road_node, weight=Point(random_point_node).distance(Point(nearest_road_node)))
+
+# Calculate the shortest path for each gas station
+gas_stations_gdf['distance_to_random_point'] = gas_stations_gdf['nearest_node'].apply(
+    lambda x: shortest_path_to_gas_station(G, random_point_node, x))
+
+# Identify the nearest gas station
 nearest_gas_station = gas_stations_gdf.loc[gas_stations_gdf['distance_to_random_point'].idxmin()]
+
+# Create a GeoDataFrame for the route to the nearest gas station
+route_to_nearest_gas_station = nx.shortest_path(G, source=random_point_node, target=nearest_gas_station['nearest_node'], weight='weight')
+route_line = LineString(route_to_nearest_gas_station)
+route_gdf = gpd.GeoDataFrame(geometry=[route_line], crs=osm_roads_gdf.crs)
 ```
 
 ### Visualization
 The final visualization includes the study area boundary, OSM roads, gas stations, random point, and the route to the nearest gas station.
 ```python
+# Plotting the OSM roads (in light gray)
 fig, ax = plt.subplots(figsize=(10, 10))
 osm_roads_gdf.plot(ax=ax, color='#B0B0B0', linewidth=0.5)
-...
+
+# Plotting the study area boundary (in light blue)
+study_area_gdf.boundary.plot(ax=ax, color='#ADD8E6', linewidth=2)
+
+# Plotting the gas stations (in light red)
+gas_stations_gdf.plot(ax=ax, color='#FFA07A', markersize=50, zorder=2)
+
+# Plotting the random point (in Red)
+random_point_gdf.plot(ax=ax, color='#D82C08', markersize=100, zorder=3)
+
+# Plotting the route to the nearest gas station (in Green)
+route_gdf.plot(ax=ax, color='#32CD32', linewidth=2, zorder=4)
+
+# Setting the axis to be equal
+ax.set_aspect('equal')
+
+# Displaying the plot
 plt.show()
 ```
 
