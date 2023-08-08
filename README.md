@@ -149,7 +149,9 @@ anim = FuncAnimation(fig, animate, frames=len(route_to_nearest_gas_station), int
 
 # Saving the animation
 anim.save('shortest_route_animation.gif', writer='pillow')
-```python
+```
+
+
 
 This code snippet will create an animation of the shortest route from the random point to the gas station and save it as a GIF file. Each frame of the animation adds one more segment of the path, starting from the random point and progressing toward the gas station.
 
